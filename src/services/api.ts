@@ -1,5 +1,4 @@
-
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 // Define our supported models
 export type Model = "deepseek-coder" | "qwen";

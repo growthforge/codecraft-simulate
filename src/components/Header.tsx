@@ -1,10 +1,9 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ApiKeyModal } from "@/components/ApiKeyModal";
 import { getApiKey } from "@/services/api";
 import { Settings, Key } from "lucide-react";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 export function Header() {
   const [apiKeyModalOpen, setApiKeyModalOpen] = useState(false);

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,7 +19,7 @@ import {
 import { Model } from "@/services/api";
 import { Loader2, Sparkles } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface PromptInputProps {
   onGenerate: (

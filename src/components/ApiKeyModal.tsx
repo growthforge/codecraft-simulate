@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +10,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { getApiKey, setApiKey, clearApiKey } from "@/services/api";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface ApiKeyModalProps {
   open: boolean;

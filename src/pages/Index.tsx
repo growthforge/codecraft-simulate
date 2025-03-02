@@ -8,7 +8,7 @@ import { StructuredPromptGuide } from "@/components/StructuredPromptGuide";
 import { generateCode, Model, getApiKey } from "@/services/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { ApiKeyModal } from "@/components/ApiKeyModal";
 
 // Default code for preview
