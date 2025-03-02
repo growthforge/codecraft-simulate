@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 
 // Define our supported models
@@ -63,12 +64,15 @@ export const generateCode = async ({
 
   try {
     // Map our simplified model names to the actual Groq model IDs
+    // Updated to use the correct model names available in Groq API
     const modelMap: Record<Model, string> = {
-      "deepseek-coder": "deepseek-coder",
-      "qwen": "llama3-groq-8b-preview",
+      "deepseek-coder": "llama3-70b-8192",
+      "qwen": "llama3-8b-8192",
     };
 
     const groqModel = modelMap[model];
+    
+    console.log(`Using model: ${groqModel} for request`);
     
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -95,13 +99,15 @@ export const generateCode = async ({
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.message || "Failed to generate code");
+      console.error("API error:", error);
+      throw new Error(error.error?.message || "Failed to generate code");
     }
 
     const data: ApiResponse = await response.json();
     return data.choices[0].message.content;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Failed to generate code";
+    console.error("Generation error:", errorMessage);
     toast.error(errorMessage);
     throw error;
   }

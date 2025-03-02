@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -88,8 +89,8 @@ The design should be clean, with lots of white space, using a palette of light g
                   <SelectValue placeholder="Select a model" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="deepseek-coder">Deepseek Coder</SelectItem>
-                  <SelectItem value="qwen">Qwen</SelectItem>
+                  <SelectItem value="deepseek-coder">LLaMA 3 70B (Powerful)</SelectItem>
+                  <SelectItem value="qwen">LLaMA 3 8B (Fast)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
