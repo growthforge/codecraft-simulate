@@ -2,7 +2,12 @@
 import { toast } from "sonner";
 
 // Define our supported models
-export type Model = "deepseek-coder" | "qwen";
+export type Model = 
+  | "llama-3-70b" 
+  | "qwen-coder" 
+  | "nvidia-nemotron" 
+  | "llama-3-8b"
+  | "mistral-nemo";
 
 export interface GenerationParams {
   prompt: string;
@@ -23,7 +28,7 @@ interface ApiResponse {
 }
 
 // Local storage key for API key
-const API_KEY_STORAGE_KEY = "groq-api-key";
+const API_KEY_STORAGE_KEY = "openrouter-api-key";
 
 /**
  * Gets the API key from local storage
@@ -47,7 +52,7 @@ export const clearApiKey = (): void => {
 };
 
 /**
- * Generates code using the Groq API
+ * Generates code using the OpenRouter API
  */
 export const generateCode = async ({
   prompt,
@@ -58,38 +63,70 @@ export const generateCode = async ({
   const apiKey = getApiKey();
   
   if (!apiKey) {
-    toast.error("API key is required. Please set your Groq API key.");
+    toast.error("API key is required. Please set your OpenRouter API key.");
     throw new Error("API key is required");
   }
 
   try {
-    // Map our simplified model names to the actual Groq model IDs
-    // Updated to use the correct model names available in Groq API
+    // Map our simplified model names to the actual OpenRouter model IDs
     const modelMap: Record<Model, string> = {
-      "deepseek-coder": "llama3-70b-8192",
-      "qwen": "llama3-8b-8192",
+      "llama-3-70b": "meta-llama/llama-3.3-70b-instruct",
+      "qwen-coder": "qwen/qwen2.5-coder-32b-instruct",
+      "nvidia-nemotron": "nvidia/llama-3.1-nemotron-70b-instruct",
+      "llama-3-8b": "meta-llama/llama-3.1-8b-instruct",
+      "mistral-nemo": "mistralai/mistral-nemo"
     };
 
-    const groqModel = modelMap[model];
+    const openRouterModel = modelMap[model];
     
-    console.log(`Using model: ${groqModel} for request`);
+    console.log(`Using model: ${openRouterModel} for request`);
     
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    // Craft a specialized system prompt for code generation
+    const systemPrompt = `You are an expert full-stack developer who specializes in creating clean, modern, responsive web applications using React, Tailwind CSS, and shadcn/ui components. 
+    
+You only respond with complete, production-ready code. 
+No explanations or comments outside the code itself.
+Your code should be valid, efficient, and follow best practices.
+Ensure all HTML is semantic and accessible.
+Use modern CSS features (flexbox, grid, variables).
+Include responsive breakpoints for mobile, tablet, and desktop.
+Add proper error handling and input validation.`;
+
+    // Enhance the user prompt with specific technical requirements
+    const enhancedPrompt = `
+Generate a complete, standalone web page based on the following requirements:
+
+${prompt}
+
+Technical Requirements:
+1. Create semantic HTML5 with proper accessibility attributes
+2. Use Tailwind CSS for styling, with a consistent design system
+3. Include responsive design (mobile, tablet, desktop)
+4. Add appropriate interactivity with clean JavaScript
+5. Optimize for performance and loading speed
+6. Include subtle animations and transitions for polish
+
+Return ONLY the complete HTML document with embedded CSS and JavaScript.
+`;
+
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": window.location.origin, // Required for OpenRouter API
+        "X-Title": "CodeCraft Generator" // Optional but good practice
       },
       body: JSON.stringify({
-        model: groqModel,
+        model: openRouterModel,
         messages: [
           {
             role: "system",
-            content: "You are an expert website developer who specializes in creating clean, modern code. You only respond with code, no explanations. Your code should be valid, efficient, and follow best practices."
+            content: systemPrompt
           },
           {
             role: "user",
-            content: prompt
+            content: enhancedPrompt
           }
         ],
         temperature,

@@ -33,7 +33,7 @@ interface PromptInputProps {
 
 export function PromptInput({ onGenerate, isGenerating }: PromptInputProps) {
   const [prompt, setPrompt] = useState("");
-  const [model, setModel] = useState<Model>("deepseek-coder");
+  const [model, setModel] = useState<Model>("llama-3-70b");
   const [temperature, setTemperature] = useState(0.3);
 
   const handleGenerate = async () => {
@@ -89,8 +89,11 @@ The design should be clean, with lots of white space, using a palette of light g
                   <SelectValue placeholder="Select a model" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="deepseek-coder">LLaMA 3 70B (Powerful)</SelectItem>
-                  <SelectItem value="qwen">LLaMA 3 8B (Fast)</SelectItem>
+                  <SelectItem value="llama-3-70b">Llama 3.3 70B (Powerful)</SelectItem>
+                  <SelectItem value="qwen-coder">Qwen 2.5 Coder 32B (Code-focused)</SelectItem>
+                  <SelectItem value="nvidia-nemotron">NVIDIA Nemotron 70B (Precise)</SelectItem>
+                  <SelectItem value="llama-3-8b">Llama 3.1 8B (Fast)</SelectItem>
+                  <SelectItem value="mistral-nemo">Mistral Nemo 12B (Multilingual)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

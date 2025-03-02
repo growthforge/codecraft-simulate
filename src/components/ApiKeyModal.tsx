@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { getApiKey, setApiKey, clearApiKey } from "@/services/api";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { setApiKey, getApiKey } from "@/services/api";
 import { toast } from "sonner";
 
 interface ApiKeyModalProps {
@@ -18,73 +20,52 @@ interface ApiKeyModalProps {
 }
 
 export function ApiKeyModal({ open, onOpenChange }: ApiKeyModalProps) {
-  const [apiKey, setApiKeyState] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
-
-  useEffect(() => {
-    const storedKey = getApiKey();
-    if (storedKey) {
-      setApiKeyState(storedKey);
-    }
-  }, [open]);
+  const [apiKey, setApiKeyValue] = useState(getApiKey() || "");
 
   const handleSave = () => {
-    setIsSaving(true);
-    try {
-      if (apiKey.trim()) {
-        setApiKey(apiKey.trim());
-        toast.success("API key saved successfully");
-        onOpenChange(false);
-      } else {
-        clearApiKey();
-        toast.success("API key cleared");
-        onOpenChange(false);
-      }
-    } catch (error) {
-      toast.error("Failed to save API key");
-    } finally {
-      setIsSaving(false);
+    if (!apiKey.trim()) {
+      toast.error("Please enter a valid API key");
+      return;
     }
+
+    setApiKey(apiKey.trim());
+    toast.success("API key saved successfully");
+    onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md backdrop-blur-xl shadow-lg animate-scale-in border border-border/40">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-xl">Groq API Key</DialogTitle>
+          <DialogTitle>OpenRouter API Key</DialogTitle>
           <DialogDescription>
-            Enter your Groq API key to enable code generation features.
-            Your key is stored locally and never sent to our servers.
+            Enter your OpenRouter API key to use the code generation feature.
+            You can get a key from{" "}
+            <a
+              href="https://openrouter.ai/keys"
+              target="_blank"
+              rel="noreferrer"
+              className="text-primary hover:underline"
+            >
+              OpenRouter
+            </a>
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4 py-4">
-          <div className="space-y-2">
+        <div className="grid gap-4 py-4">
+          <div className="grid gap-2">
+            <Label htmlFor="apiKey">API Key</Label>
             <Input
               id="apiKey"
-              placeholder="Enter your Groq API key"
               type="password"
               value={apiKey}
-              onChange={(e) => setApiKeyState(e.target.value)}
-              className="w-full"
+              onChange={(e) => setApiKeyValue(e.target.value)}
+              placeholder="sk-or-v1-..."
+              className="col-span-3"
             />
-            <p className="text-sm text-muted-foreground">
-              Don't have an API key? <a href="https://console.groq.com/keys" className="text-primary underline" target="_blank" rel="noopener noreferrer">
-                Get one from Groq
-              </a>
-            </p>
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button 
-            onClick={handleSave} 
-            disabled={isSaving}
-            className="bg-primary text-white hover:bg-primary/90 transition-colors"
-          >
-            {isSaving ? "Saving..." : "Save"}
-          </Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
