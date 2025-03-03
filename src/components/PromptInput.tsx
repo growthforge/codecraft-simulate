@@ -94,6 +94,10 @@ The design should be clean, with lots of white space, using a palette of light g
                   <SelectItem value="nvidia-nemotron">NVIDIA Nemotron 70B (Precise)</SelectItem>
                   <SelectItem value="llama-3-8b">Llama 3.1 8B (Fast)</SelectItem>
                   <SelectItem value="mistral-nemo">Mistral Nemo 12B (Multilingual)</SelectItem>
+                  <SelectItem value="gemini-flash">Google Gemini Flash 1.5 (Experimental)</SelectItem>
+                  <SelectItem value="llama-3-vision">Llama 3.2 11B Vision (Visual-aware)</SelectItem>
+                  <SelectItem value="deepseek-coder">DeepSeek Coder 33B (Advanced code)</SelectItem>
+                  <SelectItem value="claude-3-5-sonnet">Claude 3.5 Sonnet (Premium)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -7,7 +7,11 @@ export type Model =
   | "qwen-coder" 
   | "nvidia-nemotron" 
   | "llama-3-8b"
-  | "mistral-nemo";
+  | "mistral-nemo"
+  | "gemini-flash"
+  | "llama-3-vision"
+  | "deepseek-coder"
+  | "claude-3-5-sonnet";
 
 export interface GenerationParams {
   prompt: string;
@@ -74,7 +78,11 @@ export const generateCode = async ({
       "qwen-coder": "qwen/qwen2.5-coder-32b-instruct",
       "nvidia-nemotron": "nvidia/llama-3.1-nemotron-70b-instruct",
       "llama-3-8b": "meta-llama/llama-3.1-8b-instruct",
-      "mistral-nemo": "mistralai/mistral-nemo"
+      "mistral-nemo": "mistralai/mistral-nemo",
+      "gemini-flash": "google/gemini-flash-1.5-experimental",
+      "llama-3-vision": "meta-llama/llama-3.2-11b-vision-instruct",
+      "deepseek-coder": "deepseek-ai/deepseek-coder-33b-instruct",
+      "claude-3-5-sonnet": "anthropic/claude-3-5-sonnet"
     };
 
     const openRouterModel = modelMap[model];

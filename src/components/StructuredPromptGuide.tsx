@@ -72,6 +72,10 @@ export function StructuredPromptGuide() {
                   <li><span className="font-medium">NVIDIA Nemotron:</span> Great for precise, technical implementations</li>
                   <li><span className="font-medium">Llama 3.1 8B:</span> Fast results for simpler pages and quick iterations</li>
                   <li><span className="font-medium">Mistral Nemo:</span> Excellent for multilingual websites</li>
+                  <li><span className="font-medium">Google Gemini:</span> Well-rounded with good visual understanding</li>
+                  <li><span className="font-medium">Llama 3.2 Vision:</span> Best for sites needing visual components and image descriptions</li>
+                  <li><span className="font-medium">DeepSeek Coder:</span> Superior for complex web applications and advanced JS</li>
+                  <li><span className="font-medium">Claude 3.5 Sonnet:</span> Premium model with exceptional reasoning and design skills</li>
                 </ul>
               </div>
             </div>

@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setApiKey, getApiKey } from "@/services/api";
 import { toast } from "sonner";
+import { ExternalLink } from "lucide-react";
 
 interface ApiKeyModalProps {
   open: boolean;
@@ -39,15 +40,16 @@ export function ApiKeyModal({ open, onOpenChange }: ApiKeyModalProps) {
         <DialogHeader>
           <DialogTitle>OpenRouter API Key</DialogTitle>
           <DialogDescription>
-            Enter your OpenRouter API key to use the code generation feature.
-            You can get a key from{" "}
+            Enter your OpenRouter API key to access powerful AI models for code generation. 
+            You can get a free API key from{" "}
             <a
               href="https://openrouter.ai/keys"
               target="_blank"
               rel="noreferrer"
-              className="text-primary hover:underline"
+              className="text-primary hover:underline inline-flex items-center"
             >
               OpenRouter
+              <ExternalLink className="ml-1 h-3 w-3" />
             </a>
           </DialogDescription>
         </DialogHeader>
@@ -62,10 +64,14 @@ export function ApiKeyModal({ open, onOpenChange }: ApiKeyModalProps) {
               placeholder="sk-or-v1-..."
               className="col-span-3"
             />
+            <p className="text-xs text-muted-foreground mt-1">
+              CodeCraft gives you access to 9 powerful AI models including Llama, Qwen, DeepSeek, 
+              Claude, and more - all available with a free OpenRouter account.
+            </p>
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSave}>Save API Key</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
